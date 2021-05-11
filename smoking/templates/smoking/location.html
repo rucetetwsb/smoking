@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}- 위치/유형 페이지{% endblock %}
+{% block content %}
+<!--예시로 한양여자대학교 위도와 경도를 가지고 map 표시-->
+<!--	<div id="map" style="width:500px;height:400px;"></div>-->
+<!--	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=541b6d15b257b828a3da0c50a02d541e"></script>-->
+<!--	<script>-->
+<!--		var container = document.getElementById('map');-->
+<!--		var options = {-->
+<!--			center: new kakao.maps.LatLng(37.55920282802482, 127.04964970792122),-->
+<!--			level: 3-->
+<!--		};-->
+<!--		var map = new kakao.maps.Map(container, options);-->
+
+<!--		var markerPosition  = new kakao.maps.LatLng(37.55920282802482, 127.04964970792122);-->
+<!--    	var marker = new kakao.maps.Marker({position: markerPosition});-->
+<!--    	marker.setMap(map);-->
+<!--	</script>-->
+<div class="container">
+    <div class = "dropdown">
+        <button class = "btn btn-secondary dropdown-toggle" data-toggle="dropdown">구 선택</button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">종로구</a>
+            <div class="dropdown-divider"></div> <!-- 구분선 -->
+          <a class="dropdown-item" href="#">도봉구</a>
+            <div class="dropdown-divider"></div> <!-- 구분선 -->
+          <a class="dropdown-item" href="#">성북구</a>
+            <div class="dropdown-divider"></div> <!-- 구분선 -->
+          <a class="dropdown-item" href="#">서초구</a>
+        </div>
+    </div>
+</div>
+<!--<div class="container">-->
+<!--    <img src = "seoul.png">-->
+<!--</div>-->
+{% endblock %}

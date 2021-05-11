@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.post-add {
+    font-size: 40px;
+    font-weight: bolder;
+    text-align: center;
+}
+</style>
+
+<body>
+<!--<form action="" method="GET">-->
+    <form method="POST" class="post-form">
+        {{ form.as_p }}
+        {% csrf_token %}
+    <br/><br/>
+        <button type="submit" href="{% url 'post:post_list' %}" class="btn btn-primary">등록</button>
+    </form>
+</body>
+{% endblock %}

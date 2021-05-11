@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.header1 {
+    background-color: #3F5FA5;
+    color: white;
+    padding: 20px 30px;
+    border-bottom: 1px solid #3D3D3D;
+    margin-bottom: 20px;
+}
+
+.header1 h1 {
+    font-size: 40px;
+    font-weight: bolder;
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+</style>
+<body>
+    <div class="header1">
+            <h1>문의 / 요청</h1>
+    </div>
+    <div class="container">
+        <h3><a href="">{{ post.title }}</a></h3>
+        <div class="text">{{ post.text|linebreaksbr }}</div>
+    </div>
+    <form action="delete/" method="POST">
+        {% csrf_token %}
+        <a class="btn btn-primary" href="{% url 'post:post_list' %}" style ="float:left; margin-top:25px;">목록</a>
+        <button type="submit" class="btn btn-danger" style="margin-top:25px;margin-left:5px;">삭제</button>
+    </form>
+    </div>
+</body>
+{% endblock %}

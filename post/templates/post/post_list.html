@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.header1 {
+    background-color: #3F5FA5;
+    color: white;
+    padding: 20px 30px;
+    border-bottom: 1px solid #3D3D3D;
+    margin-bottom: 20px;
+}
+
+.header1 h1 {
+    font-size: 40px;
+    font-weight: bolder;
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.recent1 {
+    text-align: center;
+    width: 200px;
+    margin: 10px auto;
+    font-size: 30px;
+    font-weight: lighter;
+    color: #818181;
+    border-bottom: 1px solid #ddd;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.item{
+    overflow: hidden;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.item h3 {
+    font-weight: bolder;
+}
+
+.info {
+    display: inline-block;
+    float: right;
+    font-size: 13px;
+    color: #707070;
+    margin-top: 10px;
+}
+
+.info span {
+    font-weight: bold;
+}
+
+.author {
+    float: right;
+}
+</style>
+
+<body>
+    <div class="header1">
+            <h1>문의 / 요청</h1>
+    </div>
+    <div class="recent1">최근 글</div>
+    <div class="container">
+        <a class="btn btn-primary" href="{% url 'post:post_new' %}" style ="float:right">등록</a>
+        <br/><br/>
+        <ul class="list">
+            {% for post in posts %}
+            <li class="item">
+                <h3><a href="post/{{ post.pk }}">{{ post.title }}</a></h3>
+                <div class="text">{{ post.text|truncatewords:50 }}</div>
+                <div class="info">
+                    <div class="published-date"><span>날짜 | </span>{{ post.published_date }}</div>
+                    <div class="author"><span>작성자 | </span>{{ post.author }}</div>
+                </div>
+            </li>
+            <br/>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+{% endblock %}

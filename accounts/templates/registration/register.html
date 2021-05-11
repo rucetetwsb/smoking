@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}- Register{% endblock %}
+
+{% block content %}
+<style>
+    .loginbox {
+    width : 70%;
+    text-align : center;
+    border:1px solid #EAEAEA;
+    border-radius : 40px;
+    padding : 10%;
+    margin : 10% 15%;
+    background:#FDFFFF;
+    }
+
+    .form-group{
+    margin : 0 auto;
+    width : 250px;
+    }
+</style>
+
+<div class="loginbox">
+    <div>
+            <h4>회원가입</h4>
+    </div>
+    <br>
+    <form method="post" class="post-form">
+        {% csrf_token %}
+        {% include "registration/form_errors.html" %}
+        <div class="form-group">
+            <label for="username">아이디(이메일 주소)</label>
+            <input type="text" class="form-control" name="username" id="username"
+                   value="{{ form.username.value|default_if_none:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="password1">비밀번호</label>
+            <input type="password" class="form-control" name="password1" id="password1"
+                   value="{{ form.password1.value|default_if_none:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="password2">비밀번호 확인</label>
+            <input type="password" class="form-control" name="password2" id="password2"
+                   value="{{ form.password2.value|default_if_none:'' }}">
+        </div>
+        <br><br>
+        <button type="submit" class="btn btn-primary">가입하기</button>
+    </form>
+</div>
+{% endblock %}
