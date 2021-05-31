@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "registration/accounts_base.html" %}
 {% block title %}- Register{% endblock %}
 
 {% block content %}
@@ -14,7 +14,10 @@
     }
 
     .form-group{
-    margin : 0 auto;
+    margin-bottom: 12px;
+    margin-top:auto;
+    margin-right: auto;
+    margin-left: auto;
     width : 250px;
     }
 </style>
@@ -23,20 +26,32 @@
     <div>
             <h4>회원가입</h4>
     </div>
-    <br>
+    <br/>
     <form method="post" class="post-form">
         {% csrf_token %}
         {% include "registration/form_errors.html" %}
+
+<!--        아이디(닉네임), 이메일 주소(널 값 허용), 비밀번호 필드-->
         <div class="form-group">
-            <label for="username">아이디(이메일 주소)</label>
+            <label for="username">아이디 (닉네임)</label>
             <input type="text" class="form-control" name="username" id="username"
                    value="{{ form.username.value|default_if_none:'' }}">
         </div>
+        <br/>
+
+        <div class="form-group">
+            <label for="email">이메일 주소</label>
+            <input type="text" class="form-control" name="email" id="email"
+                   value="{{ form.email.value|default_if_none:'' }}">
+        </div>
+        <br/>
+
         <div class="form-group">
             <label for="password1">비밀번호</label>
             <input type="password" class="form-control" name="password1" id="password1"
                    value="{{ form.password1.value|default_if_none:'' }}">
         </div>
+        <br/>
         <div class="form-group">
             <label for="password2">비밀번호 확인</label>
             <input type="password" class="form-control" name="password2" id="password2"

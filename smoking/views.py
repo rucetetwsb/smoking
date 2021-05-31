@@ -22,3 +22,6 @@ def graph(request) :
 
 def direction(request) :
     return render(request, 'smoking/direction.html')
+
+def songpa_map(request) :
+    return render(request, 'smoking/songpa_map.html')

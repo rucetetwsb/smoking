@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "post/post_base.html" %}
 
 {% block content %}
 <style>
@@ -7,26 +7,28 @@
     color: white;
     padding: 20px 30px;
     border-bottom: 1px solid #3D3D3D;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top:30px;
 }
 
-.header1 h1 {
-    font-size: 40px;
+.header1 h3 {
+    font-size: 25px;
     font-weight: bolder;
     margin: 0;
     margin-bottom: 10px;
+    margin-top: 10px;
     text-align: center;
 }
 
-.recent1 {
-    text-align: center;
-    width: 200px;
-    margin: 10px auto;
-    font-size: 30px;
-    font-weight: lighter;
-    color: #818181;
-    border-bottom: 1px solid #ddd;
-}
+<!--.recent1 {-->
+<!--    text-align: center;-->
+<!--    width: 200px;-->
+<!--    margin: 10px auto;-->
+<!--    font-size: 30px;-->
+<!--    font-weight: lighter;-->
+<!--    color: #818181;-->
+<!--    border-bottom: 1px solid #ddd;-->
+<!--}-->
 
 a:hover {
     text-decoration: none;
@@ -61,25 +63,100 @@ a:hover {
 
 <body>
     <div class="header1">
-            <h1>문의 / 요청</h1>
+            <h3>문의 / 요청</h3>
     </div>
-    <div class="recent1">최근 글</div>
+<!--    <div class="container">-->
+<!--        <a class="btn btn-primary" href="{% url 'post:post_new' %}" style ="float:right; margin-right:10px">등록</a>-->
+<!--        <br/><br/>-->
+<!--        <ul class="list">-->
+<!--            {% for post in posts %}-->
+<!--            <li class="item">-->
+<!--                <h3><a href="post/{{ post.pk }}">{{ post.title }}</a></h3>-->
+<!--                <div class="info">-->
+<!--                    <div class="number"><span>글 번호 | </span>{{ post.number }}</div>-->
+<!--                    <div class="published-date"><span>날짜 | </span>{{ post.published_date }}</div>-->
+<!--                    <div class="author"><span>작성자 | </span>{{ post.author }}</div>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <br/>-->
+<!--            {% endfor %}-->
+<!--        </ul>-->
+<!--    </div>-->
+
     <div class="container">
-        <a class="btn btn-primary" href="{% url 'post:post_new' %}" style ="float:right">등록</a>
-        <br/><br/>
-        <ul class="list">
-            {% for post in posts %}
-            <li class="item">
-                <h3><a href="post/{{ post.pk }}">{{ post.title }}</a></h3>
-                <div class="text">{{ post.text|truncatewords:50 }}</div>
-                <div class="info">
-                    <div class="published-date"><span>날짜 | </span>{{ post.published_date }}</div>
-                    <div class="author"><span>작성자 | </span>{{ post.author }}</div>
-                </div>
-            </li>
-            <br/>
-            {% endfor %}
-        </ul>
+    <div class="row mt-5">
+    <div class="col-12">
+    <a class="btn btn-primary" href="{% url 'post:post_new' %}" style ="float:right;">글 쓰기</a>
+        <br><br>
     </div>
+    <table class="table">
+      <thead class="thead">
+        <tr>
+          <th scope="col">&nbsp;&nbsp;&nbsp;</th>
+          <th scope="col">제목</th>
+          <th scope="col">내용</th>
+          <th scope="col">작성일</th>
+          <th scope="col">작성자</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      {% for post in posts %}
+        <tr onclick = "location.href='post/{{ post.pk }}'">
+          <th scope="row">
+              <a href='post/{{ post.pk }}'>
+            {{ post.number }}
+              </a>
+          </th>
+
+<!--          <td>{{ post.number }}</td>-->
+
+            <td>{{ post.title }}</td>
+            <td>{{ post.text }}</td>
+            <td>{{ post.published_date }}</td>
+            <td>{{ post.author }}</td>
+
+        </tr>
+
+      {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+    <div class="paging">
+            <ul class = "pagination justify-content-center">
+                {% if posts.has_previous %}
+
+                    <li class = "page-item">
+                        <a class = "page-link disabled" href = "?p={{posts.previous_page_number}}">이전으로</a>
+                    </li>
+                {% else %}
+                    <li class = "page-item disabled">
+                        <a class = "page-link disabled" href = "#">이전으로</a>
+                    </li>
+                {% endif %}
+
+                <li class = "page-item active">
+                    <a class = "page-link">{{posts.number}}/{{posts.paginator.num_pages}}</a>
+                </li>
+
+                {% if posts.has_next %}
+                    <li class = "page-item">
+                        <a class = "page-link" href = "?p={{posts.next_page_number}}">다음으로</a>
+                    </li>
+                {% else %}
+                    <li class = "page-item disabled">
+                        <a class = "page-link disabled" href = "#">다음으로</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+
+
+
 </body>
 {% endblock %}

@@ -9,6 +9,6 @@ urlpatterns=[
     path('location/', views.location, name='location'),
     path('cp_cd/', views.cp_cd, name='cp_cd'),
     path('graph/', views.graph, name='graph'),
-    path('direction/', views.direction, name='direction')
+    path('direction/', views.direction, name='direction'),
+    path('songpa_map/', views.songpa_map, name='songpa_map'),
 ]
-

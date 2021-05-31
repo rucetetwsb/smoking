@@ -1,0 +1,118 @@
+{% extends "post/post_base.html" %}
+
+{% block content %}
+<style>
+.header1 {
+    background-color: #3F5FA5;
+    color: white;
+    padding: 20px 30px;
+    border-bottom: 1px solid #3D3D3D;
+    margin-bottom: 20px;
+    margin-top:30px;
+}
+
+.header1 h3 {
+    font-size: 25px;
+    font-weight: bolder;
+    margin: 0;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.recent1 {
+    text-align: center;
+    width: 200px;
+    margin: 10px auto;
+    font-size: 30px;
+    font-weight: lighter;
+    color: #818181;
+    border-bottom: 1px solid #ddd;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.item{
+    overflow: hidden;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.item h3 {
+    font-weight: bolder;
+}
+
+.info {
+    display: inline-block;
+    float: right;
+    font-size: 13px;
+    color: #707070;
+    margin-top: 10px;
+}
+
+.info span {
+    font-weight: bold;
+}
+
+.author {
+    float: right;
+}
+</style>
+
+<body>
+    <div class="header1">
+            <h3>문의 / 요청</h3>
+    </div>
+    <div class="recent1">답변 완료</div>
+    <div class="container">
+        <a class="btn btn-primary" href="{% url 'post:post_list_staff' %}" style ="float:right; margin-top:5px;margin-right:5px;">글 목록 보기</a>
+        <br><br>
+<!--        <ul class="list">-->
+<!--            {% for answer in answers %}-->
+<!--            <li class="item">-->
+<!--                <h3><a href="staff/{{ answer.pk }}">{{ answer.number }}</a></h3>-->
+<!--                <div class="text">{{ answer.text|truncatewords:50 }}</div>-->
+<!--                <div class="info">-->
+<!--                    <div class="published-date"><span>글 번호 | </span>{{ answer.number }}</div>-->
+<!--                    <div class="published-date"><span>날짜 | </span>{{ answer.published_date }}</div>-->
+<!--                    <div class="author"><span>작성자(관리자) | </span>{{ answer.author }}</div>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <br/>-->
+<!--            {% endfor %}-->
+<!--        </ul>-->
+
+        <table class="table">
+      <thead class="thead">
+        <tr>
+          <th scope="col">&nbsp;&nbsp;&nbsp;</th>
+          <th scope="col">문의/요청 번호</th>
+          <th scope="col">내용</th>
+          <th scope="col">작성자&nbsp;&nbsp;</th>
+          <th scope="col">작성일</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      {% for answer in answers %}
+        <tr onclick = "location.href='staff/{{ answer.pk }}'">
+
+            <td>{{ post.title }}</td>
+
+            <td style="width:100px;"><a href="staff/{{ answer.pk }}">{{ answer.number }}</a></td>
+            <td>{{ answer.text|truncatewords:50 }}</td>
+            <td style="width:100px;">{{ answer.author }}</td>
+            <td>{{ answer.published_date }}</td>
+
+
+        </tr>
+
+      {% endfor %}
+
+      </tbody>
+    </table>
+    </div>
+</body>
+{% endblock %}

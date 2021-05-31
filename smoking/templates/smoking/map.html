@@ -6,43 +6,50 @@
     div#map {margin:0px auto}
     div#map1 {margin:0px auto}
     div#map2 {margin:0px auto}
+
+#map{position:relative;overflow:hidden;}
+.dropdown, .dropdown *{margin:0;color:#000;}
+.dropdown {position:absolute;top:10px;left:10px;z-index:10;text-align:center;background-color:#fff;}
 </style>
 
 <div style="margin-left:5%; margin-bottom:5%;" class="container" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,
                        minimum-scale=0, user-scalable=no, target-densitydpi=medium-dpi">
-    <div class = "dropdown">
-        <button class = "btn btn-secondary dropdown-toggle" data-toggle="dropdown">유형별 보기</button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">완전폐쇄형</a>
-            <div class="dropdown-divider"></div> <!-- 구분선 -->
-          <a class="dropdown-item" href="#">완전개방형</a>
-            <div class="dropdown-divider"></div> <!-- 구분선 -->
-          <a class="dropdown-item" href="#">부분개방형</a>
-            <div class="dropdown-divider"></div> <!-- 구분선 -->
-          <a class="dropdown-item" href="#">기타</a>
-        </div>
-    </div>
 </div>
 
 <div class="container" align="center" style="margin-top:5%">
-    <h4><strong>내 위치 주변 흡연구역</strong></h4>
-    <br/>
+    <h4><strong>내 위치 주변 흡연구역</strong></h4><br/>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=541b6d15b257b828a3da0c50a02d541e"></script>
+
+<!-- 지도가 표시될 div -->
+    <!-- 지도 위에 표시될 드롭다운 -->
+    <div id="map" style="width:100%;height:400px;">
+        <div class = "dropdown">
+            <button class = "btn btn-secondary dropdown-toggle" data-toggle="dropdown" style="color:white;">유형별 보기</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">완전폐쇄형</a>
+                <div class="dropdown-divider"></div> <!-- 구분선 -->
+              <a class="dropdown-item" href="#">완전개방형</a>
+                <div class="dropdown-divider"></div> <!-- 구분선 -->
+              <a class="dropdown-item" href="#">부분개방형</a>
+                <div class="dropdown-divider"></div> <!-- 구분선 -->
+              <a class="dropdown-item" href="#">기타</a>
+            </div>
+        </div>
+    </div>
 
 <!-- 현재 내 위치 찾기-->
-   <div id="map" style="width:97%;height:400px;">
-   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=541b6d15b257b828a3da0c50a02d541e"></script>
-   <script>
-      var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        mapOption = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 4 // 지도의 확대 레벨
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
 if (navigator.geolocation) {
-
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     navigator.geolocation.getCurrentPosition(function(position) {
 
@@ -54,40 +61,28 @@ if (navigator.geolocation) {
 
         // 마커와 인포윈도우를 표시합니다
         displayMarker(locPosition, message);
-
-      });
-
+     });
 } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-
     var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
-        message = 'geolocation을 사용할수 없어요..'
+        message = 'geolocation을 사용할수 없습니다'
 
     displayMarker(locPosition, message);
 }
 
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
 function displayMarker(locPosition, message) {
-
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
         map: map,
         position: locPosition
     });
-    var iwContent = '<div style="padding:5px;">1번 흡연구역 <br><a href="{% url 'smoking:direction' %}" style="color:blue">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    var iwContent = '<div style="padding:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내위치</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
     iwPosition = new kakao.maps.LatLng(37.517992740481354, 126.91623783861414); //인포윈도우 표시 위치입니다
 
     var infowindow = new kakao.maps.InfoWindow({
     position : iwPosition,
     content : iwContent
-});
-<!--    var iwContent = message, // 인포윈도우에 표시할 내용-->
-<!--        iwRemoveable = true;-->
-
-<!--    // 인포윈도우를 생성합니다-->
-<!--    var infowindow = new kakao.maps.InfoWindow({-->
-<!--        content : iwContent,-->
-<!--        removable : iwRemoveable-->
-<!--    });-->
+    });
 
     // 인포윈도우를 마커위에 표시합니다
     infowindow.open(map, marker);
@@ -95,26 +90,103 @@ function displayMarker(locPosition, message) {
     // 지도 중심좌표를 접속위치로 변경합니다
     map.setCenter(locPosition);
 }
-   </script></div>
 
+// 광진구,
+var positions = [
+    {
+        title: '서울특별시 광진구 능동로 11길 지하 210', // 흡연구역 1 장소 이름
+        latlng: new kakao.maps.LatLng(37.5268349,127.0092887) // 흡연구역 1 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 워커힐로 177', // 흡연구역 2 장소 이름
+        latlng: new kakao.maps.LatLng(37.5557741,127.1087231) // 흡연구역 2 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 면목로 160, 2층', // 흡연구역 3 장소 이름
+        latlng: new kakao.maps.LatLng(37.5674002,127.0800965) // 흡연구역 3 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 아차산로 453', // 흡연구역 4 장소 이름
+        latlng: new kakao.maps.LatLng(37.5393304,127.0901889) // 흡연구역 4 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 능동로 120', // 흡연구역 5 장소 이름
+        latlng: new kakao.maps.LatLng(37.5419717,127.0745398) // 흡연구역 5 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 능동로 209', // 흡연구역 6 장소 이름
+        latlng: new kakao.maps.LatLng(37.5517986,127.0714444) // 흡연구역 6 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 긴고랑로 131', // 흡연구역 7 장소 이름
+        latlng: new kakao.maps.LatLng(37.5590531,127.0872231) // 흡연구역 7 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 아차산로 567', // 흡연구역 8 장소 이름
+        latlng: new kakao.maps.LatLng(37.5444174,127.1011142) // 흡연구역 8 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 광나루로 480', // 흡연구역 9 장소 이름
+        latlng: new kakao.maps.LatLng(37.5444039,127.0746107) // 흡연구역 9 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 자양로 167', // 흡연구역 10 장소 이름
+        latlng: new kakao.maps.LatLng(37.5428825,127.0815694) // 흡연구역 10 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 광나루로 36길 56', // 흡연구역 11 장소 이름
+        latlng: new kakao.maps.LatLng(37.5424529,127.0834611) // 흡연구역 11 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 자양로 117', // 흡연구역 12 장소 이름
+        latlng: new kakao.maps.LatLng(37.5383742,127.080019) // 흡연구역 12 장소 좌표
+    },
+    {
+        title: '서울특별시 광진구 강변역로 2', // 흡연구역 13 장소 이름
+        latlng: new kakao.maps.LatLng(37.5371439,127.0886579) // 흡연구역 13 장소 좌표
+    },
+];
 
-<div class="container" align="center" style="margin-top:5%">
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+for (var i = 0; i < positions.length; i ++) {
+
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35);
+
+    // 마커 이미지를 생성합니다
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지
+    });
+}
+</script>
+</div>
+
+<div class="container" align="center">
+    <br/><br/><br/>
     <div style="width:100%; margin-top:3%;"></div>
     <h5><strong>1번 흡연구역 상세지도</strong></h5>
     <div style="width:100%;">
         <div style="float:right; clear:both; margin-bottom:3%;">
-            <a href="{% url 'smoking:direction' %}" class="btn btn-primary">길찾기</a>
+            <a href="https://map.kakao.com/link/to/서울특별시 광진구 워커힐로 177,37.5557741,127.1087231" class="btn btn-primary">길찾기</a>
         </div>
 
-    <div id="map1" style="width:100%;height:400px; float:left clear:both;" >
+    <div id="map1" style="width:100%;height:400px;clear:both;">
     <script>
     var mapContainer1 = document.getElementById('map1'),
     mapOption1 = {
-        center: new kakao.maps.LatLng(37.56120419, 127.03921015),
-        level: 3
+        center: new kakao.maps.LatLng(37.5557741,127.1087231),
+        level: 1
     };
     var map1 = new kakao.maps.Map(mapContainer1, mapOption1);
-    var markerPosition1  = new kakao.maps.LatLng(37.56120419, 127.03921015);
+    var markerPosition1  = new kakao.maps.LatLng(37.5557741,127.1087231);
     var marker1 = new kakao.maps.Marker({
     position: markerPosition1
     });
@@ -123,21 +195,23 @@ function displayMarker(locPosition, message) {
     </div>
     </div>
 
+    <br/><br/><br/>
+
     <div style="width:100%; margin-top:3%;"></div>
     <h5><strong>2번 흡연구역 상세지도</strong></h5>
     <div style="width:100%;">
         <div style="float:right; clear:both; margin-bottom:3%;">
-            <button type = "button" class="btn btn-primary">길찾기</button>
+            <a href="https://map.kakao.com/link/to/서울특별시 광진구 면목로 160,37.5674002,127.0800965" class="btn btn-primary">길찾기</a>
         </div>
     <div id="map2" style="width:100%;height:400px;">
     <script>
     var mapContainer2 = document.getElementById('map2'),
     mapOption2 = {
-        center: new kakao.maps.LatLng(37.56625454290025, 127.04292208259292),
-        level: 3
+        center: new kakao.maps.LatLng(37.5674002,127.0800965),
+        level: 1
     };
     var map2 = new kakao.maps.Map(mapContainer2, mapOption2);
-    var markerPosition2  = new kakao.maps.LatLng(37.56625454290025, 127.04292208259292);
+    var markerPosition2  = new kakao.maps.LatLng(37.5674002,127.0800965);
     var marker2 = new kakao.maps.Marker({
     position: markerPosition2
     });
@@ -146,13 +220,4 @@ function displayMarker(locPosition, message) {
     </div>
     </div>
 </div>
-</div>
-<!--<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">-->
-<!--  <div class="btn-group mr-2" role="group" aria-label="First group">-->
-<!--    <button type="button" class="btn btn-secondary">1</button>-->
-<!--    <button type="button" class="btn btn-secondary">2</button>-->
-<!--    <button type="button" class="btn btn-secondary">3</button>-->
-<!--    <button type="button" class="btn btn-secondary">4</button>-->
-<!--  </div>-->
-<!--</div>-->
 {% endblock %}

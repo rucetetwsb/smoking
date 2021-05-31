@@ -1,0 +1,40 @@
+{% extends "post/post_base.html" %}
+
+{% block content %}
+<style>
+.header1 {
+    background-color: #3F5FA5;
+    color: white;
+    padding: 20px 30px;
+    border-bottom: 1px solid #3D3D3D;
+    margin-bottom: 20px;
+    margin-top:30px;
+}
+
+.header1 h3 {
+    font-size: 25px;
+    font-weight: bolder;
+    margin: 0;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+</style>
+<body>
+    <div class="header1">
+            <h3>문의 / 요청</h3>
+    </div>
+    <div class="container">
+        <h3><a href="">{{ answer.number }}</a></h3>
+        <div class="text">{{ answer.text|linebreaksbr }}</div>
+    </div>
+    <form action="delete/" method="POST">
+        {% csrf_token %}
+        <a class="btn btn-primary" href="{% url 'post:answer_list' %}" style ="float:left; margin-top:25px;margin-left:5px;">답변 목록 보기</a>
+        {% if request.user.is_active and request.user.is_staff %}
+        <a class="btn btn-success" href="edit/" style ="float:left; margin-top:25px;margin-left:5px;">수정하기</a>
+        <button type="submit" class="btn btn-danger" style="margin-top:25px;margin-left:5px;">삭제하기</button>
+        {% endif %}
+    </form>
+</body>
+{% endblock %}

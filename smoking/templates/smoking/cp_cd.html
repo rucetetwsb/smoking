@@ -1,13 +1,33 @@
-{% extends 'base.html' %}
-{% block title %}- 단속/민원 페이지{% endblock %}
+{% extends 'smoking/cpcd_base.html' %}
 {% block content %}
+
+<script>
+$(function () {
+// active 활성화
+    $(".nav-item > .active").css("color", "red");
+
+    $('.nav-link').click(function () {
+        // .nav-link 클릭시 이전의 active 값 해제 후,
+        $('.nav-item > .active').css("color", '#007bff');
+        $('.nav-link').removeClass('active');
+
+        // 클릭한 위치 active 적용
+        $(this).addClass('active');
+        $('.nav-item > .active').css('color', 'red');
+    });
+});
+</script>
+
+<br/><br/><br/>
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
   <div class="btn-group mr-2" role="group" aria-label="First group">
     <button type="button" class="btn btn-link">단속</button>
     <button type="button" class="btn btn-link">민원</button>
   </div>
 </div>
+
 <div data-role="content">
 <!--	<img src="/seoul.png">-->
 </div>
+
 {% endblock %}

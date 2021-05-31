@@ -1,21 +1,52 @@
-{% extends 'base.html' %}
+{% extends "post/post_base.html" %}
 
 {% block content %}
 <style>
 .post-add {
-    font-size: 40px;
-    font-weight: bolder;
-    text-align: center;
+    font-size:40px;
+    font-weight:bolder;
+    text-align:center;
+}
+
+.post {
+    float:center;
+}
+
+.form-group {
+    margin-bottom:12px;
+    margin-top:auto;
+    margin-right:auto;
+    margin-left:auto;
+    width:250px;
+}
+
+.postbox {
+    width:70%;
+    text-align:center;
+    border:1px solid #EAEAEA;
+    border-radius:40px;
+    padding:10%;
+    margin:10% 15%;
+    background:#FDFFFF;
+}
+
+.form-group {
+    margin:0 auto;
+    width:250px;
 }
 </style>
 
 <body>
-<!--<form action="" method="GET">-->
+<div class="postbox">
+    <div><h4>문의 / 요청</h4></div>
+    <br>
     <form method="POST" class="post-form">
         {{ form.as_p }}
         {% csrf_token %}
-    <br/><br/>
+        <br/><br/>
         <button type="submit" href="{% url 'post:post_list' %}" class="btn btn-primary">등록</button>
+        <a class="btn btn-secondary" href="/post/post_list">취소</a>
     </form>
+</div>
 </body>
 {% endblock %}
